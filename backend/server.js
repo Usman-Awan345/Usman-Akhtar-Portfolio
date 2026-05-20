@@ -44,12 +44,25 @@ app.use(express.json());
 app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 
 // MongoDB Connection
-mongoose.connect(process.env.MONGODB_URI, {
-  useNewUrlParser: true,
-  useUnifiedTopology: true,
-})
+mongoose.connect(process.env.MONGODB_URI)
 .then(() => console.log('MongoDB connected'))
 .catch(err => console.error('MongoDB connection error:', err));
+
+app.get('/', (req, res) => {
+  res.json({
+    status: 'ok',
+    message: 'Usman Akhtar Portfolio API is running',
+    endpoints: {
+      hero: '/api/hero',
+      about: '/api/about',
+      projects: '/api/projects',
+      services: '/api/services',
+      skills: '/api/skills',
+      social: '/api/social',
+      adminLogin: '/api/admin/login',
+    },
+  });
+});
 
 // Routes
 app.use('/api/admin', authRoutes);
