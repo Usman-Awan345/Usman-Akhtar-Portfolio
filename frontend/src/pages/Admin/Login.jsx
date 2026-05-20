@@ -5,6 +5,7 @@ import { useForm } from 'react-hook-form';
 import { Lock, Mail, LogIn } from 'lucide-react';
 import axios from 'axios';
 import toast from 'react-hot-toast';
+import BrandLogo from '../../components/BrandLogo';
 
 const AdminLogin = () => {
   const navigate = useNavigate();
@@ -34,7 +35,8 @@ const AdminLogin = () => {
         transition={{ duration: 0.5 }}
         className="w-full max-w-md"
       >
-        <div className="text-center mb-8">
+        <div className="flex flex-col items-center text-center mb-8">
+          <BrandLogo className="mb-5" />
           <h1 className="text-4xl font-bold gradient-text mb-2">Admin Portal</h1>
           <p className="text-gray-400">Sign in to manage your portfolio</p>
         </div>

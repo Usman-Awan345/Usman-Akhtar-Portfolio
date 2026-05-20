@@ -16,6 +16,7 @@ import SocialManager from './SocialManager';
 import ResumeManager from './ResumeManager';
 import AboutManager from './AboutManager';
 import HeroManager from './HeroManager';
+import BrandLogo from '../../components/BrandLogo';
 
 const Dashboard = () => {
   const navigate = useNavigate();
@@ -79,9 +80,7 @@ const Dashboard = () => {
       >
         <div className="flex flex-col h-full">
           <div className="flex items-center justify-between p-4 border-b border-gray-700">
-            {sidebarOpen && (
-              <h2 className="text-xl font-bold gradient-text">Admin Panel</h2>
-            )}
+            {sidebarOpen && <BrandLogo compact={false} />}
             <button
               onClick={() => setSidebarOpen(!sidebarOpen)}
               className="p-2 rounded-lg hover:bg-white/10 transition-colors"

@@ -4,6 +4,7 @@ import { motion } from 'framer-motion';
 import { Mail, Phone, MapPin } from 'lucide-react';
 import axios from 'axios';
 import { mapSocials } from '../utils/socialLinks';
+import BrandLogo from './BrandLogo';
 
 const Footer = () => {
   const currentYear = new Date().getFullYear();
@@ -44,7 +45,7 @@ const Footer = () => {
       <div className="container mx-auto px-4 relative z-10">
         <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8 mb-12">
           <div>
-            <h3 className="text-2xl font-bold gradient-text mb-4">Usman Akhtar</h3>
+            <BrandLogo className="mb-4" />
             <p className="text-gray-400 mb-4">
               MERN Stack & Generative AI Developer creating innovative digital solutions.
             </p>
