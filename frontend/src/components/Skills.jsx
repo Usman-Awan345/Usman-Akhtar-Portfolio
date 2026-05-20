@@ -31,21 +31,36 @@ const getIconShellStyle = (color) => {
       };
 };
 
+const preferredCategories = ['Frontend', 'Backend', 'Database', 'AI', 'Tools'];
+
+const normalizeCategoryLabel = (category) => {
+  if (!category) return 'Other';
+
+  const matchedCategory = preferredCategories.find(
+    (item) => item.toLowerCase() === String(category).toLowerCase(),
+  );
+
+  return matchedCategory || String(category).trim();
+};
+
 const Skills = () => {
   const [skills, setSkills] = useState([]);
   const [loading, setLoading] = useState(true);
   const controls = useAnimation();
-  const [ref, inView] = useInView({ threshold: 0.3 });
+  const [ref, inView] = useInView({
+    threshold: 0.05,
+    triggerOnce: true,
+  });
 
   useEffect(() => {
     fetchSkills();
   }, []);
 
   useEffect(() => {
-    if (inView) {
+    if (inView || (!loading && skills.length > 0)) {
       controls.start('visible');
     }
-  }, [controls, inView]);
+  }, [controls, inView, loading, skills.length]);
 
   const fetchSkills = async () => {
     try {
@@ -59,14 +74,21 @@ const Skills = () => {
   };
 
   const groupedSkills = skills.reduce((acc, skill) => {
-    if (!acc[skill.category]) {
-      acc[skill.category] = [];
+    const category = normalizeCategoryLabel(skill.category);
+
+    if (!acc[category]) {
+      acc[category] = [];
     }
-    acc[skill.category].push(skill);
+    acc[category].push(skill);
     return acc;
   }, {});
 
-  const categories = ['Frontend', 'Backend', 'Database', 'AI', 'Tools'];
+  const categories = [
+    ...preferredCategories.filter((category) => groupedSkills[category]?.length),
+    ...Object.keys(groupedSkills)
+      .filter((category) => !preferredCategories.includes(category))
+      .sort((a, b) => a.localeCompare(b)),
+  ];
 
   if (loading) {
     return (
@@ -104,8 +126,7 @@ const Skills = () => {
           </motion.p>
 
           <div className="space-y-12">
-            {categories.map((category) => (
-              groupedSkills[category] && groupedSkills[category].length > 0 && (
+            {categories.length > 0 ? categories.map((category) => (
                 <motion.div
                   key={category}
                   variants={{ visible: { opacity: 1, y: 0 }, hidden: { opacity: 0, y: 50 } }}
@@ -150,8 +171,9 @@ const Skills = () => {
                     ))}
                   </div>
                 </motion.div>
-              )
-            ))}
+            )) : (
+              <p className="text-center text-gray-400">Skills will appear here once they are added from the admin panel.</p>
+            )}
           </div>
         </motion.div>
       </div>

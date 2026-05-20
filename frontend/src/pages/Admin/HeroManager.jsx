@@ -4,6 +4,7 @@ import { Save, Upload } from 'lucide-react';
 import axios from 'axios';
 import toast from 'react-hot-toast';
 import { resolveAssetUrl } from '../../utils/assets';
+import { applyImageFallback, defaultHeroImage } from '../../utils/imageFallbacks';
 
 const HeroManager = () => {
   const [hero, setHero] = useState({
@@ -142,6 +143,9 @@ const HeroManager = () => {
               <img
                 src={resolveAssetUrl(hero.heroImage)}
                 alt="Hero preview"
+                onError={(event) => {
+                  applyImageFallback(event, defaultHeroImage);
+                }}
                 className="w-40 h-40 rounded-full object-cover border border-white/20"
               />
             )}

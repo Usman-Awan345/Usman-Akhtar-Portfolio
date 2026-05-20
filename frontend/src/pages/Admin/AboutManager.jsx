@@ -4,6 +4,7 @@ import { Plus, Save, Trash2, Upload } from 'lucide-react';
 import axios from 'axios';
 import toast from 'react-hot-toast';
 import { resolveAssetUrl } from '../../utils/assets';
+import { applyImageFallback, defaultProfileImage } from '../../utils/imageFallbacks';
 
 const emptyAbout = {
   bio: '',
@@ -218,7 +219,14 @@ const AboutManager = () => {
         <Panel title="Profile">
           <label className="block text-white font-medium mb-2">Profile Image</label>
           {about.profileImage && (
-            <img src={resolveAssetUrl(about.profileImage)} alt="Profile" className="w-32 h-32 rounded-full object-cover mb-4" />
+            <img
+              src={resolveAssetUrl(about.profileImage)}
+              alt="Profile"
+              onError={(event) => {
+                applyImageFallback(event, defaultProfileImage);
+              }}
+              className="w-32 h-32 rounded-full object-cover mb-4"
+            />
           )}
           <label className="cursor-pointer inline-flex items-center gap-2 px-4 py-2 rounded-lg glass-effect hover:bg-white/10 transition-colors">
             <Upload size={18} />

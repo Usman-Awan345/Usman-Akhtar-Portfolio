@@ -9,6 +9,7 @@ import axios from 'axios';
 import Footer from '../components/Footer';
 import { resolveAssetUrl } from '../utils/assets';
 import { getSkillIcon } from '../utils/skillIcons';
+import { applyImageFallback, defaultProfileImage } from '../utils/imageFallbacks';
 
 const About = () => {
   const [about, setAbout] = useState(null);
@@ -22,7 +23,7 @@ const About = () => {
                 in writing clean, maintainable code and staying up-to-date with the latest industry 
                 trends. When I'm not coding, I enjoy contributing to open-source projects and 
                 mentoring aspiring developers.`,
-    profileImage: 'https://images.unsplash.com/photo-1560250097-0b93528c311a?w=800&h=600&fit=crop',
+    profileImage: defaultProfileImage,
     heroSubtitle: 'Get to know the developer behind the code - my journey, skills, and passion for creating innovative digital solutions.',
     stats: [
       { label: 'Started Coding', value: '2015' },
@@ -187,6 +188,9 @@ const About = () => {
                   <img
                     src={resolveAssetUrl(aboutData.profileImage) || defaultAbout.profileImage}
                     alt="Usman Akhtar"
+                    onError={(event) => {
+                      applyImageFallback(event, defaultAbout.profileImage);
+                    }}
                     className="w-full h-auto"
                   />
                 </div>

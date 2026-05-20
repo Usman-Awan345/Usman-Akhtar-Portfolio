@@ -3,9 +3,18 @@ import Project from '../models/Project.js';
 import { protect } from '../middleware/auth.js';
 import multer from 'multer';
 import { uploadToCloudinary } from '../utils/cloudinary.js';
+import fs from 'fs';
+import path from 'path';
+import { fileURLToPath } from 'url';
 
 const router = express.Router();
-const upload = multer({ dest: 'uploads/' });
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+const uploadDir = path.resolve(__dirname, '../uploads');
+
+fs.mkdirSync(uploadDir, { recursive: true });
+
+const upload = multer({ dest: uploadDir });
 
 // Public routes
 router.get('/', async (req, res) => {

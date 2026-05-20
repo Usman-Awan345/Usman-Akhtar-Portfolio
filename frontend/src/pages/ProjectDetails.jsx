@@ -6,6 +6,11 @@ import { FaGithub as Github } from 'react-icons/fa';
 import axios from 'axios';
 import toast from 'react-hot-toast';
 import { resolveAssetUrl } from '../utils/assets';
+import {
+  getProjectImageUrl,
+  handleProjectImageError,
+  projectPlaceholder,
+} from '../utils/projectImages';
 
 const ProjectDetails = () => {
   const { id } = useParams();
@@ -56,8 +61,11 @@ const ProjectDetails = () => {
       {/* Hero Section */}
       <div className="relative h-[60vh] overflow-hidden">
         <img
-          src={resolveAssetUrl(project.image)}
+          src={getProjectImageUrl(project, 1200)}
           alt={project.title}
+          onError={(event) => {
+            handleProjectImageError(event, project, projectPlaceholder, 1200);
+          }}
           className="w-full h-full object-cover"
         />
         <div className="absolute inset-0 bg-gradient-to-t from-gray-900 via-gray-900/50 to-transparent"></div>
@@ -136,8 +144,11 @@ const ProjectDetails = () => {
                   {project.images.map((img, index) => (
                     <img
                       key={index}
-                      src={resolveAssetUrl(img)}
+                      src={resolveAssetUrl(img) || projectPlaceholder}
                       alt={`${project.title} screenshot ${index + 1}`}
+                      onError={(event) => {
+                        event.currentTarget.src = projectPlaceholder;
+                      }}
                       className="rounded-lg"
                     />
                   ))}

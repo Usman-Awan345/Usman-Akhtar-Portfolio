@@ -3,9 +3,18 @@ import Hero from '../models/Hero.js';
 import { protect } from '../middleware/auth.js';
 import multer from 'multer';
 import { uploadToCloudinary } from '../utils/cloudinary.js';
+import fs from 'fs';
+import path from 'path';
+import { fileURLToPath } from 'url';
 
 const router = express.Router();
-const upload = multer({ dest: 'uploads/' });
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+const uploadDir = path.resolve(__dirname, '../uploads');
+
+fs.mkdirSync(uploadDir, { recursive: true });
+
+const upload = multer({ dest: uploadDir });
 
 const defaultHero = {
   badgeText: 'Welcome to my portfolio',
@@ -27,6 +36,12 @@ const defaultHero = {
   scrollText: 'Scroll to explore',
 };
 
+const localUploadExists = (url) => {
+  if (!url || typeof url !== 'string' || !url.startsWith('/uploads/')) return true;
+
+  return fs.existsSync(path.join(uploadDir, path.basename(url)));
+};
+
 const parseList = (value) => {
   if (!value) return [];
 
@@ -44,6 +59,11 @@ router.get('/', async (req, res) => {
       hero = new Hero(defaultHero);
       await hero.save();
     }
+
+    if (!localUploadExists(hero.heroImage)) {
+      hero.heroImage = defaultHero.heroImage;
+    }
+
     res.json(hero);
   } catch (error) {
     res.status(500).json({ message: error.message });

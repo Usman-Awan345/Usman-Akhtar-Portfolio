@@ -4,6 +4,7 @@ import { ArrowRight, Download, Code, Server, Cpu } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
 import { resolveAssetUrl } from '../utils/assets';
+import { applyImageFallback, defaultHeroImage } from '../utils/imageFallbacks';
 
 const Hero = () => {
   const defaultHero = {
@@ -18,7 +19,7 @@ const Hero = () => {
     secondaryButtonText: 'Hire Me',
     secondaryButtonLink: '/contact',
     techStack: ['React', 'Node.js', 'MongoDB', 'Express', 'OpenAI', 'LangChain'],
-    heroImage: 'https://ui-avatars.com/api/?name=Usman+Akhtar&background=3B82F6&color=fff&size=400&bold=true&length=2&font-size=0.33&rounded=true',
+    heroImage: defaultHeroImage,
     experienceValue: '5+',
     experienceLabel: 'Years Exp',
     projectsValue: '50+',
@@ -27,11 +28,34 @@ const Hero = () => {
   };
   const [hero, setHero] = useState(defaultHero);
 
+  const mergeHeroData = (data) => {
+    const nextHero = { ...defaultHero };
+
+    Object.entries(data || {}).forEach(([key, value]) => {
+      if (Array.isArray(value)) {
+        if (value.length > 0) nextHero[key] = value;
+        return;
+      }
+
+      if (typeof value === 'string') {
+        const trimmedValue = value.trim();
+        if (trimmedValue) nextHero[key] = trimmedValue;
+        return;
+      }
+
+      if (value !== null && value !== undefined) {
+        nextHero[key] = value;
+      }
+    });
+
+    return nextHero;
+  };
+
   useEffect(() => {
     const fetchHero = async () => {
       try {
         const response = await axios.get('/api/hero');
-        setHero({ ...defaultHero, ...response.data });
+        setHero(mergeHeroData(response.data));
       } catch (error) {
         console.error('Error fetching hero:', error);
       }
@@ -49,7 +73,7 @@ const Hero = () => {
   ];
 
   return (
-    <section className="relative min-h-screen flex items-center justify-center overflow-hidden pt-20">
+    <section className="relative min-h-screen flex items-center justify-center overflow-hidden pt-28 pb-16">
       {/* Gradient Background */}
       <div className="absolute inset-0 bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900">
         <div className="absolute inset-0 opacity-20">
@@ -89,7 +113,7 @@ const Hero = () => {
         </motion.div>
       ))}
 
-      <div className="container mx-auto px-4 relative z-10">
+      <div className="container mx-auto px-4 relative z-20">
         <div className="grid lg:grid-cols-2 gap-12 items-center">
           <motion.div
             initial={{ opacity: 0, x: -50 }}
@@ -197,6 +221,9 @@ const Hero = () => {
                   <img
                     src={resolveAssetUrl(hero.heroImage) || defaultHero.heroImage}
                     alt={hero.name}
+                    onError={(event) => {
+                      applyImageFallback(event, defaultHero.heroImage);
+                    }}
                     className="w-full h-full object-cover"
                   />
                 </div>

@@ -16,7 +16,12 @@ import {
 import { FaGithub as Github } from 'react-icons/fa';
 import axios from 'axios';
 import toast from 'react-hot-toast';
-import { resolveAssetUrl } from '../utils/assets';
+import {
+  getProjectImageUrl,
+  handleProjectImageError,
+  projectPlaceholder,
+  projectThumbPlaceholder,
+} from '../utils/projectImages';
 
 const Projects = () => {
   const [projects, setProjects] = useState([]);
@@ -216,8 +221,11 @@ const ProjectCard = ({ project, index }) => {
       <div className="relative rounded-2xl overflow-hidden glass-effect h-full flex flex-col">
         <div className="relative overflow-hidden h-56">
           <img
-            src={resolveAssetUrl(project.image) || 'https://via.placeholder.com/400x250?text=Project+Image'}
+            src={getProjectImageUrl(project)}
             alt={project.title}
+            onError={(event) => {
+              handleProjectImageError(event, project, projectPlaceholder);
+            }}
             className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
           />
           <div className="absolute inset-0 bg-gradient-to-t from-gray-900 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
@@ -347,8 +355,11 @@ const ProjectListItem = ({ project, index }) => {
         
         <div className="w-32 h-32 rounded-lg overflow-hidden flex-shrink-0">
           <img
-            src={resolveAssetUrl(project.image) || 'https://via.placeholder.com/128?text=Project'}
+            src={getProjectImageUrl(project, 256)}
             alt={project.title}
+            onError={(event) => {
+              handleProjectImageError(event, project, projectThumbPlaceholder, 256);
+            }}
             className="w-full h-full object-cover"
           />
         </div>

@@ -3,9 +3,18 @@ import About from '../models/About.js';
 import { protect } from '../middleware/auth.js';
 import multer from 'multer';
 import { uploadToCloudinary } from '../utils/cloudinary.js';
+import fs from 'fs';
+import path from 'path';
+import { fileURLToPath } from 'url';
 
 const router = express.Router();
-const upload = multer({ dest: 'uploads/' });
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+const uploadDir = path.resolve(__dirname, '../uploads');
+
+fs.mkdirSync(uploadDir, { recursive: true });
+
+const upload = multer({ dest: uploadDir });
 
 const defaultAbout = {
   bio: 'I am a passionate developer...',
@@ -69,6 +78,12 @@ const defaultAbout = {
   ],
 };
 
+const localUploadExists = (url) => {
+  if (!url || typeof url !== 'string' || !url.startsWith('/uploads/')) return true;
+
+  return fs.existsSync(path.join(uploadDir, path.basename(url)));
+};
+
 const parseJsonField = (value, fallback) => {
   if (!value) return fallback;
   try {
@@ -85,6 +100,11 @@ router.get('/', async (req, res) => {
       about = new About(defaultAbout);
       await about.save();
     }
+
+    if (!localUploadExists(about.profileImage)) {
+      about.profileImage = defaultAbout.profileImage;
+    }
+
     res.json(about);
   } catch (error) {
     res.status(500).json({ message: error.message });

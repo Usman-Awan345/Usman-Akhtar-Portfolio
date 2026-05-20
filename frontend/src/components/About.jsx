@@ -5,6 +5,7 @@ import { Code, Database, Globe, Cloud, Shield, Zap, Server, Layout, Brain } from
 import axios from 'axios';
 import { resolveApiUrl, resolveAssetUrl } from '../utils/assets';
 import { getSkillIcon } from '../utils/skillIcons';
+import { applyImageFallback, defaultProfileImage } from '../utils/imageFallbacks';
 
 const About = () => {
   const controls = useAnimation();
@@ -19,7 +20,7 @@ const About = () => {
                 Since then, I've worked with startups and established companies, delivering 
                 high-quality projects across various industries including e-commerce, education, 
                 and healthcare technology.`,
-    profileImage: 'https://images.unsplash.com/photo-1560250097-0b93528c311a?w=600&h=400&fit=crop',
+    profileImage: defaultProfileImage,
     resumeLink: '',
     stats: [
       { label: 'Years Experience', value: '5+' },
@@ -120,6 +121,9 @@ const About = () => {
                   <img
                     src={resolveAssetUrl(aboutData.profileImage) || defaultAbout.profileImage}
                     alt="Usman Akhtar"
+                    onError={(event) => {
+                      applyImageFallback(event, defaultAbout.profileImage);
+                    }}
                     className="w-full h-auto"
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-gray-900 via-transparent to-transparent"></div>

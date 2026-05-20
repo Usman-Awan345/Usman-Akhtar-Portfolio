@@ -5,6 +5,18 @@ import axios from 'axios';
 import toast from 'react-hot-toast';
 import { getSkillIcon } from '../../utils/skillIcons';
 
+const preferredCategories = ['Frontend', 'Backend', 'Database', 'AI', 'Tools'];
+
+const normalizeCategoryLabel = (category) => {
+  if (!category) return 'Other';
+
+  const matchedCategory = preferredCategories.find(
+    (item) => item.toLowerCase() === String(category).toLowerCase(),
+  );
+
+  return matchedCategory || String(category).trim();
+};
+
 const SkillsManager = () => {
   const [skills, setSkills] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -16,7 +28,7 @@ const SkillsManager = () => {
     level: 50,
   });
 
-  const categories = ['Frontend', 'Backend', 'Database', 'AI', 'Tools'];
+  const categories = preferredCategories;
 
   useEffect(() => {
     fetchSkills();
@@ -74,12 +86,21 @@ const SkillsManager = () => {
   };
 
   const groupedSkills = skills.reduce((acc, skill) => {
-    if (!acc[skill.category]) {
-      acc[skill.category] = [];
+    const category = normalizeCategoryLabel(skill.category);
+
+    if (!acc[category]) {
+      acc[category] = [];
     }
-    acc[skill.category].push(skill);
+    acc[category].push(skill);
     return acc;
   }, {});
+
+  const visibleCategories = [
+    ...preferredCategories.filter((category) => groupedSkills[category]?.length),
+    ...Object.keys(groupedSkills)
+      .filter((category) => !preferredCategories.includes(category))
+      .sort((a, b) => a.localeCompare(b)),
+  ];
 
   if (loading) {
     return <div className="flex justify-center items-center h-64">
@@ -106,8 +127,7 @@ const SkillsManager = () => {
         </button>
       </div>
 
-      {categories.map(category => (
-        groupedSkills[category] && groupedSkills[category].length > 0 && (
+      {visibleCategories.length > 0 ? visibleCategories.map(category => (
           <div key={category} className="mb-8">
             <h3 className="text-lg font-semibold text-white mb-4">{category}</h3>
             <div className="grid gap-4">
@@ -159,8 +179,11 @@ const SkillsManager = () => {
               ))}
             </div>
           </div>
-        )
-      ))}
+      )) : (
+        <div className="rounded-xl glass-effect p-6 text-center text-gray-400">
+          No skills added yet.
+        </div>
+      )}
 
       {/* Modal for Add/Edit */}
       {showModal && (

@@ -3,13 +3,17 @@ export const getApiBaseUrl = () => {
 };
 
 export const resolveAssetUrl = (url) => {
-  if (!url) return '';
-  if (/^(https?:|data:|blob:)/i.test(url)) return url;
+  if (!url || typeof url !== 'string') return '';
+
+  const normalizedUrl = url.trim().replace(/\\/g, '/');
+  if (!normalizedUrl) return '';
+  if (/^(https?:|data:|blob:)/i.test(normalizedUrl)) return normalizedUrl;
 
   const apiBaseUrl = getApiBaseUrl();
-  if (!apiBaseUrl) return url;
+  const absolutePath = normalizedUrl.startsWith('/') ? normalizedUrl : `/${normalizedUrl}`;
+  if (!apiBaseUrl) return absolutePath;
 
-  return `${apiBaseUrl}${url.startsWith('/') ? url : `/${url}`}`;
+  return `${apiBaseUrl}${absolutePath}`;
 };
 
 export const resolveApiUrl = (path) => {
