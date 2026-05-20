@@ -15,6 +15,7 @@ import resumeRoutes from './routes/resume.js';
 import aboutRoutes from './routes/about.js';
 import socialRoutes from './routes/social.js';
 import heroRoutes from './routes/hero.js';
+import User from './models/User.js';
 
 dotenv.config();
 
@@ -44,8 +45,31 @@ app.use(express.json());
 app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 
 // MongoDB Connection
+const seedAdminIfMissing = async () => {
+  if (!process.env.ADMIN_EMAIL || !process.env.ADMIN_PASSWORD) {
+    console.warn('Admin seed skipped: ADMIN_EMAIL or ADMIN_PASSWORD is missing');
+    return;
+  }
+
+  const adminExists = await User.findOne({ email: process.env.ADMIN_EMAIL });
+  if (adminExists) {
+    console.log('Admin user already exists');
+    return;
+  }
+
+  await User.create({
+    email: process.env.ADMIN_EMAIL,
+    password: process.env.ADMIN_PASSWORD,
+    role: 'admin',
+  });
+  console.log('Admin user created successfully');
+};
+
 mongoose.connect(process.env.MONGODB_URI)
-.then(() => console.log('MongoDB connected'))
+.then(async () => {
+  console.log('MongoDB connected');
+  await seedAdminIfMissing();
+})
 .catch(err => console.error('MongoDB connection error:', err));
 
 app.get('/', (req, res) => {
