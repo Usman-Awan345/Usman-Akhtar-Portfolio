@@ -4,6 +4,33 @@ import { useInView } from 'react-intersection-observer';
 import axios from 'axios';
 import { getSkillIcon } from '../utils/skillIcons';
 
+const getIconShellStyle = (color) => {
+  const hex = color?.replace('#', '');
+
+  if (!hex || hex.length !== 6) {
+    return {
+      backgroundColor: 'rgba(15, 23, 42, 0.96)',
+      borderColor: 'rgba(148, 163, 184, 0.34)',
+    };
+  }
+
+  const r = parseInt(hex.slice(0, 2), 16);
+  const g = parseInt(hex.slice(2, 4), 16);
+  const b = parseInt(hex.slice(4, 6), 16);
+  const luminance = (0.299 * r + 0.587 * g + 0.114 * b) / 255;
+  const useDarkShell = luminance > 0.72;
+
+  return useDarkShell
+    ? {
+        backgroundColor: 'rgba(15, 23, 42, 0.96)',
+        borderColor: 'rgba(148, 163, 184, 0.34)',
+      }
+    : {
+        backgroundColor: 'rgba(248, 250, 252, 0.98)',
+        borderColor: 'rgba(203, 213, 225, 0.95)',
+      };
+};
+
 const Skills = () => {
   const [skills, setSkills] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -97,8 +124,11 @@ const Skills = () => {
                             {(() => {
                               const { icon: SkillIcon, color } = getSkillIcon(skill.name);
                               return (
-                                <span className="p-2 rounded-lg glass-effect border border-white/10 flex-shrink-0">
-                                  <SkillIcon size={22} style={{ color }} />
+                                <span
+                                  className="flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-lg border shadow-sm"
+                                  style={getIconShellStyle(color)}
+                                >
+                                  <SkillIcon size={23} style={{ color }} />
                                 </span>
                               );
                             })()}

@@ -1,21 +1,16 @@
 import React from 'react';
 
-const BrandLogo = ({ compact = false, className = '' }) => {
+const BrandLogo = ({ className = '' }) => {
   return (
-    <div className={`flex items-center gap-3 ${className}`}>
-      <span className="relative flex h-11 w-11 items-center justify-center rounded-2xl bg-gray-950 border border-white/15 shadow-lg shadow-blue-500/10 overflow-hidden">
-        <span className="absolute inset-0 bg-gradient-to-br from-sky-400/20 via-violet-500/20 to-pink-500/20" />
-        <span className="relative text-xl font-black tracking-tight bg-gradient-to-br from-sky-300 via-violet-300 to-pink-300 bg-clip-text text-transparent">
-          UA
-        </span>
-      </span>
-      {!compact && (
-        <span className="leading-tight">
-          <span className="block text-lg font-black tracking-wide text-white">Usman Akhtar</span>
-          <span className="block text-[11px] uppercase tracking-[0.28em] text-blue-300/80">MERN + AI</span>
-        </span>
-      )}
-    </div>
+    <h1
+      className={`text-2xl md:text-3xl font-black tracking-[0.15em] 
+      bg-gradient-to-r from-purple-400 via-fuchsia-500 to-indigo-500 
+      bg-clip-text text-transparent 
+      drop-shadow-[0_0_25px_rgba(168,85,247,0.4)] 
+      hover:scale-105 transition-all duration-300 ${className}`}
+    >
+      Usman Akhtar
+    </h1>
   );
 };
 

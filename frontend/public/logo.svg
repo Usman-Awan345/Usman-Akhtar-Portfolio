@@ -1,34 +1,48 @@
-<svg width="220" height="64" viewBox="0 0 220 64" fill="none" xmlns="http://www.w3.org/2000/svg">
-  <rect width="64" height="64" rx="18" fill="#08111F"/>
-  <rect x="1" y="1" width="62" height="62" rx="17" stroke="url(#paint0_linear)" stroke-opacity="0.75" stroke-width="2"/>
-  <path d="M14 16V36.5C14 45.1 20.1 50 28 50C35.9 50 42 45.1 42 36.5V16H35.5V36.1C35.5 40.9 32.4 44.1 28 44.1C23.6 44.1 20.5 40.9 20.5 36.1V16H14Z" fill="url(#paint1_linear)"/>
-  <path d="M35 50L46.9 16H53.8L41.9 50H35Z" fill="url(#paint2_linear)"/>
-  <path d="M29.5 38H43.5L41.7 32.8H31.3L29.5 38Z" fill="#EAF2FF"/>
-  <path d="M82 20.8C82 17.4 84.3 15.2 87.8 15.2C91.3 15.2 93.6 17.4 93.6 20.8V34.4C93.6 41.9 88.8 46.3 81.5 46.3C74.2 46.3 69.4 41.9 69.4 34.4V15.8H75.7V34.1C75.7 38.2 77.9 40.6 81.5 40.6C85.1 40.6 87.3 38.2 87.3 34.1V20.8H82Z" fill="#EAF2FF"/>
-  <path d="M101.1 45.7V15.8H107.3V40.1H121.1V45.7H101.1Z" fill="#EAF2FF"/>
-  <path d="M126.7 45.7V15.8H133L146.8 35.1V15.8H152.8V45.7H146.5L132.7 26.5V45.7H126.7Z" fill="#EAF2FF"/>
-  <path d="M160.9 45.7V15.8H181.2V21.2H167.1V27.8H179.6V33.1H167.1V40.3H181.7V45.7H160.9Z" fill="#EAF2FF"/>
-  <path d="M188.6 45.7V15.8H200.2C206.8 15.8 211 19.4 211 25.4C211 29.4 209.1 32.4 205.8 33.9L212 45.7H205.1L199.8 35.1H194.8V45.7H188.6ZM194.8 29.9H199.7C202.9 29.9 204.7 28.3 204.7 25.5C204.7 22.7 202.9 21.2 199.7 21.2H194.8V29.9Z" fill="#EAF2FF"/>
-  <path d="M69.7 54H124.3" stroke="url(#paint3_linear)" stroke-width="3" stroke-linecap="round"/>
+<svg width="960" height="280" viewBox="0 0 960 280" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="960" height="280" rx="38" fill="#030303"/>
+  <g filter="url(#softGlow)">
+    <rect x="54" y="44" width="192" height="192" rx="42" fill="#050505"/>
+    <rect x="60" y="50" width="180" height="180" rx="36" stroke="url(#goldStroke)" stroke-width="8"/>
+    <path d="M99 115L71 140L99 165" stroke="#F5D98C" stroke-width="10" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M201 115L229 140L201 165" stroke="#F5D98C" stroke-width="10" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M121 174V102H137V174H121ZM174 174V102H190V174H174ZM134 157H179V174H134V157Z" fill="#FFFFFF"/>
+    <path d="M150 174L176 102H192L166 174H150Z" fill="url(#goldFill)"/>
+    <circle cx="204" cy="191" r="7" fill="#F8D878"/>
+    <path d="M103 84H136" stroke="#F8D878" stroke-width="5" stroke-linecap="round" opacity="0.78"/>
+    <path d="M164 202H197" stroke="#F8D878" stroke-width="5" stroke-linecap="round" opacity="0.72"/>
+  </g>
+  <path d="M305 111.6V157.7C305 179.6 321 193.5 344 193.5C367 193.5 383 179.6 383 157.7V111.6H362.8V156.7C362.8 167.5 355.7 174.2 344 174.2C332.3 174.2 325.2 167.5 325.2 156.7V111.6H305Z" fill="#FFFFFF"/>
+  <path d="M404.8 192L436.8 111.6H461.2L493.2 192H471.4L465.5 175.4H432.1L426.2 192H404.8ZM438.3 158H459.3L448.8 128.5L438.3 158Z" fill="url(#wordGold)"/>
+  <path d="M305 218H486" stroke="#D7A73B" stroke-width="5" stroke-linecap="round"/>
+  <path d="M533 111.6H591.4V128.8H553.2V143.1H588V159.6H553.2V174.8H593.2V192H533V111.6Z" fill="#FFFFFF"/>
+  <path d="M616.5 192V111.6H637.6L672.5 159.9V111.6H692.5V192H671.4L636.5 143.7V192H616.5Z" fill="#FFFFFF"/>
+  <path d="M718.8 192V111.6H752.5C777.8 111.6 794 127.4 794 151.8C794 176.2 777.8 192 752.5 192H718.8ZM739 174.6H751.6C765.2 174.6 773.4 166.3 773.4 151.8C773.4 137.3 765.2 129 751.6 129H739V174.6Z" fill="#FFFFFF"/>
+  <path d="M818.8 192V111.6H839V192H818.8Z" fill="#FFFFFF"/>
+  <path d="M862.7 192V111.6H899.2C918.1 111.6 930.4 122.6 930.4 139.2C930.4 150.3 924.8 158.8 915.2 163.2L933.4 192H910.4L895.1 166.5H882.9V192H862.7ZM882.9 150.6H897.1C905.2 150.6 909.8 146.5 909.8 139.6C909.8 132.7 905.2 128.7 897.1 128.7H882.9V150.6Z" fill="#FFFFFF"/>
+  <text x="305" y="86" fill="#F7D783" font-family="Inter, Montserrat, Arial, sans-serif" font-size="20" font-weight="700" letter-spacing="7">USMAN AKHTAR</text>
+  <text x="532" y="218" fill="#C7C7C7" font-family="Inter, Montserrat, Arial, sans-serif" font-size="18" font-weight="600" letter-spacing="5">SOFTWARE DEVELOPER + AI ENGINEER</text>
   <defs>
-    <linearGradient id="paint0_linear" x1="0" y1="0" x2="64" y2="64" gradientUnits="userSpaceOnUse">
-      <stop stop-color="#38BDF8"/>
-      <stop offset="0.52" stop-color="#8B5CF6"/>
-      <stop offset="1" stop-color="#EC4899"/>
+    <linearGradient id="goldStroke" x1="66" y1="50" x2="231" y2="225" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#FFF4BF"/>
+      <stop offset="0.5" stop-color="#D8A93D"/>
+      <stop offset="1" stop-color="#8A6118"/>
     </linearGradient>
-    <linearGradient id="paint1_linear" x1="14" y1="16" x2="42" y2="50" gradientUnits="userSpaceOnUse">
-      <stop stop-color="#38BDF8"/>
-      <stop offset="0.52" stop-color="#8B5CF6"/>
-      <stop offset="1" stop-color="#EC4899"/>
+    <linearGradient id="goldFill" x1="156" y1="102" x2="191" y2="174" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#FFF3B0"/>
+      <stop offset="0.5" stop-color="#D4A535"/>
+      <stop offset="1" stop-color="#8E661D"/>
     </linearGradient>
-    <linearGradient id="paint2_linear" x1="35" y1="16" x2="53.8" y2="50" gradientUnits="userSpaceOnUse">
-      <stop stop-color="#EC4899"/>
-      <stop offset="1" stop-color="#38BDF8"/>
+    <linearGradient id="wordGold" x1="420" y1="112" x2="485" y2="192" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#FFF3B0"/>
+      <stop offset="0.54" stop-color="#D4A535"/>
+      <stop offset="1" stop-color="#8E661D"/>
     </linearGradient>
-    <linearGradient id="paint3_linear" x1="69.7" y1="54" x2="124.3" y2="54" gradientUnits="userSpaceOnUse">
-      <stop stop-color="#38BDF8"/>
-      <stop offset="0.5" stop-color="#8B5CF6"/>
-      <stop offset="1" stop-color="#EC4899"/>
-    </linearGradient>
+    <filter id="softGlow" x="38" y="28" width="224" height="224" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+      <feFlood flood-opacity="0" result="BackgroundImageFix"/>
+      <feGaussianBlur in="BackgroundImageFix" stdDeviation="8"/>
+      <feComposite in2="SourceAlpha" operator="in" result="effect1_backgroundBlur"/>
+      <feDropShadow dx="0" dy="8" stdDeviation="16" flood-color="#D8A93D" flood-opacity="0.18"/>
+      <feBlend mode="normal" in="SourceGraphic" in2="effect1_backgroundBlur" result="shape"/>
+    </filter>
   </defs>
 </svg>

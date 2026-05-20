@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { Routes, Route, Link, useNavigate } from 'react-router-dom';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion } from 'framer-motion';
 import { 
   LayoutDashboard, FolderGit2, Server, Code, MessageSquare, 
   Link as LinkIcon, FileText, Settings, LogOut, Menu, X,
-  Plus, Edit, Trash2, Eye, Home
+  Plus, Eye, Home, ExternalLink
 } from 'lucide-react';
 import axios from 'axios';
 import toast from 'react-hot-toast';
@@ -105,6 +105,15 @@ const Dashboard = () => {
           </nav>
 
           <div className="p-4 border-t border-gray-700">
+            <a
+              href="/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="mb-3 flex items-center gap-3 px-4 py-2 w-full rounded-lg bg-cyan-500/15 hover:bg-cyan-500/25 transition-colors group"
+            >
+              <ExternalLink size={20} className="text-cyan-300" />
+              {sidebarOpen && <span className="text-cyan-200">View Portfolio</span>}
+            </a>
             <button
               onClick={handleLogout}
               className="flex items-center gap-3 px-4 py-2 w-full rounded-lg hover:bg-red-500/20 transition-colors group"
@@ -120,7 +129,7 @@ const Dashboard = () => {
       <div className={`transition-all duration-300 ${sidebarOpen ? 'ml-64' : 'ml-20'}`}>
         <div className="p-6">
           <Routes>
-            <Route path="/" element={<DashboardHome stats={stats} />} />
+            <Route path="/" element={<DashboardHome stats={stats} onLogout={handleLogout} />} />
             <Route path="hero/*" element={<HeroManager />} />
             <Route path="projects/*" element={<ProjectsManager />} />
             <Route path="services/*" element={<ServicesManager />} />
@@ -136,14 +145,35 @@ const Dashboard = () => {
   );
 };
 
-const DashboardHome = ({ stats }) => {
+const DashboardHome = ({ stats, onLogout }) => {
   return (
     <motion.div
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       className="space-y-6"
     >
-      <h1 className="text-3xl font-bold text-white">Dashboard</h1>
+      <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+        <h1 className="text-3xl font-bold text-white">Dashboard</h1>
+        <div className="flex flex-col gap-3 sm:flex-row">
+          <a
+            href="/"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex items-center justify-center gap-2 rounded-lg bg-cyan-500 px-4 py-2 font-semibold text-gray-950 shadow-lg shadow-cyan-500/20 transition-colors hover:bg-cyan-300"
+          >
+            <ExternalLink size={18} />
+            Open Portfolio
+          </a>
+          <button
+            type="button"
+            onClick={onLogout}
+            className="inline-flex items-center justify-center gap-2 rounded-lg border border-red-400/35 bg-red-500/15 px-4 py-2 font-semibold text-red-200 transition-colors hover:bg-red-500/25"
+          >
+            <LogOut size={18} />
+            Logout
+          </button>
+        </div>
+      </div>
       
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
         <div className="p-6 rounded-xl glass-effect">
