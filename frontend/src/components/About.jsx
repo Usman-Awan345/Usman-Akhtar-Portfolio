@@ -4,6 +4,7 @@ import { useInView } from 'react-intersection-observer';
 import { Code, Database, Globe, Cloud, Shield, Zap, Server, Layout, Brain } from 'lucide-react';
 import axios from 'axios';
 import { resolveApiUrl, resolveAssetUrl } from '../utils/assets';
+import { getSkillIcon } from '../utils/skillIcons';
 
 const About = () => {
   const controls = useAnimation();
@@ -73,13 +74,13 @@ const About = () => {
     'from-red-400 to-rose-500',
     'from-indigo-400 to-purple-500',
   ];
-  const skillIcons = [Code, Server, Database, Layout, Brain, Globe, Shield, Zap];
   const skills = Object.values(aboutData.skills || {})
     .flatMap((list) => Array.isArray(list) ? list : [])
     .slice(0, 8)
     .map((skill, index) => ({
       ...skill,
-      icon: skillIcons[index % skillIcons.length],
+      icon: getSkillIcon(skill.name).icon,
+      iconColor: getSkillIcon(skill.name).color,
       color: skillColors[index % skillColors.length],
     }));
 
@@ -163,7 +164,7 @@ const About = () => {
                       className="flex items-center gap-3 p-2 rounded-lg glass-effect hover:shadow-lg transition-all duration-300 group"
                     >
                       <div className={`p-1.5 rounded-lg bg-gradient-to-r ${skill.color} group-hover:scale-110 transition-transform`}>
-                        <skill.icon size={16} className="text-white" />
+                        <skill.icon size={16} style={{ color: skill.iconColor }} />
                       </div>
                       <div className="flex-1">
                         <div className="flex justify-between items-center">

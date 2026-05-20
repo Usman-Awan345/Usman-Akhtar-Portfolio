@@ -8,6 +8,7 @@ import {
 import axios from 'axios';
 import Footer from '../components/Footer';
 import { resolveAssetUrl } from '../utils/assets';
+import { getSkillIcon } from '../utils/skillIcons';
 
 const About = () => {
   const [about, setAbout] = useState(null);
@@ -77,18 +78,13 @@ const About = () => {
     ],
   };
 
-  const skillIconByCategory = {
-    frontend: Code,
-    backend: Server,
-    database: Database,
-    ai: Brain,
-  };
   const skills = Object.fromEntries(
     Object.entries(aboutData.skills || defaultSkills).map(([category, list]) => [
       category,
       (Array.isArray(list) ? list : []).map((skill) => ({
         ...skill,
-        icon: skillIconByCategory[category] || Code,
+        icon: getSkillIcon(skill.name).icon,
+        iconColor: getSkillIcon(skill.name).color,
       })),
     ])
   );
@@ -270,7 +266,7 @@ const About = () => {
                     <div key={index}>
                       <div className="flex justify-between mb-2">
                         <div className="flex items-center gap-2">
-                          <skill.icon size={16} className="text-blue-400" />
+                          <skill.icon size={16} style={{ color: skill.iconColor }} />
                           <span className="text-gray-200">{skill.name}</span>
                         </div>
                         <span className="text-blue-400 text-sm">{skill.level}%</span>

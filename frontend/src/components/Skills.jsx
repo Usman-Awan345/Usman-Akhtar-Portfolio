@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { motion, useAnimation } from 'framer-motion';
 import { useInView } from 'react-intersection-observer';
 import axios from 'axios';
+import { getSkillIcon } from '../utils/skillIcons';
 
 const Skills = () => {
   const [skills, setSkills] = useState([]);
@@ -91,8 +92,18 @@ const Skills = () => {
                         animate={{ width: '100%' }}
                         transition={{ delay: index * 0.1, duration: 0.8 }}
                       >
-                        <div className="flex justify-between mb-2">
-                          <span className="text-gray-200 font-medium">{skill.name}</span>
+                        <div className="flex justify-between items-center mb-2 gap-4">
+                          <div className="flex items-center gap-3 min-w-0">
+                            {(() => {
+                              const { icon: SkillIcon, color } = getSkillIcon(skill.name);
+                              return (
+                                <span className="p-2 rounded-lg glass-effect border border-white/10 flex-shrink-0">
+                                  <SkillIcon size={22} style={{ color }} />
+                                </span>
+                              );
+                            })()}
+                            <span className="text-gray-200 font-medium truncate">{skill.name}</span>
+                          </div>
                           <span className="text-blue-400">{skill.level}%</span>
                         </div>
                         <div className="h-3 bg-gray-700 rounded-full overflow-hidden">

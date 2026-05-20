@@ -3,6 +3,7 @@ import { motion } from 'framer-motion';
 import { Plus, Edit, Trash2, X } from 'lucide-react';
 import axios from 'axios';
 import toast from 'react-hot-toast';
+import { getSkillIcon } from '../../utils/skillIcons';
 
 const SkillsManager = () => {
   const [skills, setSkills] = useState([]);
@@ -115,7 +116,13 @@ const SkillsManager = () => {
                   <div className="flex items-center justify-between">
                     <div className="flex-1">
                       <div className="flex justify-between mb-2">
-                        <span className="text-white font-medium">{skill.name}</span>
+                        <span className="text-white font-medium flex items-center gap-2">
+                          {(() => {
+                            const { icon: SkillIcon, color } = getSkillIcon(skill.name);
+                            return <SkillIcon size={20} style={{ color }} />;
+                          })()}
+                          {skill.name}
+                        </span>
                         <span className="text-blue-400">{skill.level}%</span>
                       </div>
                       <div className="h-2 bg-gray-700 rounded-full overflow-hidden">
@@ -179,6 +186,15 @@ const SkillsManager = () => {
                 className="w-full px-4 py-2 rounded-lg glass-effect text-white"
                 required
               />
+              {formData.name && (
+                <div className="flex items-center gap-3 p-3 rounded-lg glass-effect">
+                  {(() => {
+                    const { icon: SkillIcon, color } = getSkillIcon(formData.name);
+                    return <SkillIcon size={24} style={{ color }} />;
+                  })()}
+                  <span className="text-gray-300">Icon preview</span>
+                </div>
+              )}
               
               <select
                 value={formData.category}
